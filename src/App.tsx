@@ -1,18 +1,27 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 import ApplicationTitle from "./components/ApplicationTitle";
 import CardNote from "./components/CardNote";
 import CardNoteGrid from "./components/CardNoteGrid";
 import Header from "./components/Header";
 import SearchInput from "./components/SearchInput";
-import styled from "styled-components";
-
-const AppWrapper = styled.div`
-  width: 700px;
-`;
+import { getApiNotes } from "./services";
+import { Note } from "./interfaces";
 
 function App() {
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    async function getNotes() {
+      const notes = await getApiNotes();
+      setNotes(notes);
+    }
+
+    getNotes();
+  }, []);
+
   return (
-    <AppWrapper>
+    <div>
       <div>
         <ApplicationTitle />
       </div>
@@ -21,12 +30,15 @@ function App() {
       </div>
       <Header />
       <CardNoteGrid>
-        <CardNote title="Learn React" description="Description" />
-        <CardNote title="Learn VueJs" description="Description 222" />
-        <CardNote title="Learn React" description="Description" />
-        <CardNote title="Learn VueJs" description="Description 222" />
+        {notes.map((note) => (
+          <CardNote
+            key={note._id}
+            title={note.title}
+            description={note.description}
+          />
+        ))}
       </CardNoteGrid>
-    </AppWrapper>
+    </div>
   );
 }
 

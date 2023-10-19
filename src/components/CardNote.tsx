@@ -7,6 +7,11 @@ const CardNoteWrapper = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+`;
+
+const CardNoteBody = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: start;
 
   > h2,
@@ -15,19 +20,37 @@ const CardNoteWrapper = styled.div`
   }
 
   > h2 {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   > p {
-    font-size: 13px;
+    font-size: 15px;
+  }
+`;
+
+const CardNoteFooter = styled.div`
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+
+  a {
+    text-transform: uppercase;
+    color: #f5f5f5;
+    font-size: 14px;
   }
 `;
 
 const CardNote = (props) => {
   return (
     <CardNoteWrapper>
-      <h2>{props.title}</h2>
-      <p>{props.description}</p>
+      <CardNoteBody>
+        <h2>{props.title}</h2>
+        <p>{props.description}</p>
+      </CardNoteBody>
+      <CardNoteFooter>
+        <a href="">Edit</a>
+        <a href="">Remove</a>
+      </CardNoteFooter>
     </CardNoteWrapper>
   );
 };

@@ -5,6 +5,7 @@ const StyledButton = styled.button`
   background: #363062;
   color: #f5f5f5;
   text-transform: uppercase;
+  font-size: 14px;
 `;
 
 const HeaderActionButton = () => {
