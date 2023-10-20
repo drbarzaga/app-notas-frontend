@@ -8,11 +8,11 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
-const Header = () => {
+const Header = (props) => {
   return (
     <HeaderWrapper>
       <HeaderTitle />
-      <HeaderActionButton />
+      <HeaderActionButton onClick={props.onClick} />
     </HeaderWrapper>
   );
 };

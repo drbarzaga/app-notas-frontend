@@ -10,3 +10,21 @@ export async function getApiNotes() {
         console.error(error)
     }
 }
+
+// Create Note
+export async function createNote(payload: unknown) {
+    try {
+        const response = await fetch(`${API_URL}/api/notes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        const data = await response.json()
+        console.log(data)
+        return data;
+    } catch (error) {
+        console.error(error)
+    }
+}

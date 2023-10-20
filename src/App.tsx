@@ -7,18 +7,25 @@ import Header from "./components/Header";
 import SearchInput from "./components/SearchInput";
 import { getApiNotes } from "./services";
 import { Note } from "./interfaces";
+import CreateNoteModal from "./components/CreateNoteModal";
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [createNoteModalOpen, setCreateNoteModalOpen] = useState(false);
+
+  async function getNotes() {
+    const notes = await getApiNotes();
+    setNotes(notes);
+  }
 
   useEffect(() => {
-    async function getNotes() {
-      const notes = await getApiNotes();
-      setNotes(notes);
-    }
-
     getNotes();
   }, []);
+
+  async function handleOnCreate() {
+    setCreateNoteModalOpen(false);
+    await getNotes();
+  }
 
   return (
     <div>
@@ -28,7 +35,7 @@ function App() {
       <div>
         <SearchInput />
       </div>
-      <Header />
+      <Header onClick={() => setCreateNoteModalOpen(true)} />
       <CardNoteGrid>
         {notes.map((note) => (
           <CardNote
@@ -38,6 +45,12 @@ function App() {
           />
         ))}
       </CardNoteGrid>
+
+      <CreateNoteModal
+        isOpen={createNoteModalOpen}
+        onClose={() => setCreateNoteModalOpen(false)}
+        onCreate={handleOnCreate}
+      />
     </div>
   );
 }

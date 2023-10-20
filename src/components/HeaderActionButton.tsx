@@ -8,8 +8,8 @@ const StyledButton = styled.button`
   font-size: 14px;
 `;
 
-const HeaderActionButton = () => {
-  return <StyledButton>New Note</StyledButton>;
+const HeaderActionButton = (props) => {
+  return <StyledButton onClick={props.onClick}>New Note</StyledButton>;
 };
 
 export default HeaderActionButton;
