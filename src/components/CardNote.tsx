@@ -4,9 +4,10 @@ const CardNoteWrapper = styled.div`
   background: #4d4c7d;
   color: #f5f5f5;
   padding: 10px;
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
+  border-radius: 7px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
 const CardNoteBody = styled.div`
