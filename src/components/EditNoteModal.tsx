@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Modal from "./common/Modal";
-import { createNote } from "../services";
+import { editNote } from "../services";
 
-const CreateNoteModal = (props) => {
+const EditNoteModal = (props) => {
   const [form, setForm] = useState({
-    title: "",
-    description: "",
+    title: props.note.title,
+    description: props.note.description,
   });
 
   function handleInputOnChange(e) {
@@ -18,8 +18,9 @@ const CreateNoteModal = (props) => {
 
   async function handleAccept() {
     try {
-      await createNote(form);
-      props.onCreate();
+      const id = props.note._id;
+      await editNote(id, form);
+      props.onEdit();
     } catch (error) {
       console.error(error);
     }
@@ -27,7 +28,7 @@ const CreateNoteModal = (props) => {
 
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
-      <h3>Create Note</h3>
+      <h3>Edit Note</h3>
 
       <div>
         <label htmlFor="title">Title</label>
@@ -35,6 +36,7 @@ const CreateNoteModal = (props) => {
           type="text"
           name="title"
           id="title"
+          value={form.title}
           onChange={handleInputOnChange}
         />
       </div>
@@ -44,8 +46,9 @@ const CreateNoteModal = (props) => {
           name="description"
           id="description"
           rows={5}
+          value={form.description}
           onChange={handleInputOnChange}
-        ></textarea>
+        />
       </div>
       <div>
         <button onClick={handleAccept}>Aceptar</button>
@@ -55,4 +58,4 @@ const CreateNoteModal = (props) => {
   );
 };
 
-export default CreateNoteModal;
+export default EditNoteModal;

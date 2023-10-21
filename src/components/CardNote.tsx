@@ -32,11 +32,15 @@ const CardNoteFooter = styled.div`
   display: flex;
   justify-content: end;
   gap: 10px;
+`;
 
-  a {
-    text-transform: uppercase;
-    color: #f5f5f5;
-    font-size: 14px;
+const ActionButton = styled.a<{ isRemove?: boolean }>`
+  text-transform: uppercase;
+  color: ${(props: any) => (props.isRemove ? "#F99417" : "#f5f5f5")};
+  font-size: 14px;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
@@ -48,8 +52,25 @@ const CardNote = (props) => {
         <p>{props.description}</p>
       </CardNoteBody>
       <CardNoteFooter>
-        <a href="">Edit</a>
-        <a href="">Remove</a>
+        <ActionButton
+          href=""
+          onClick={(e) => {
+            e.preventDefault();
+            props.onEdit();
+          }}
+        >
+          Edit
+        </ActionButton>
+        <ActionButton
+          href=""
+          isRemove
+          onClick={(e) => {
+            e.preventDefault();
+            props.onRemove();
+          }}
+        >
+          Remove
+        </ActionButton>
       </CardNoteFooter>
     </CardNoteWrapper>
   );

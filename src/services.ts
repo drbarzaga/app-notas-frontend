@@ -21,10 +21,39 @@ export async function createNote(payload: unknown) {
             },
             body: JSON.stringify(payload)
         })
-        const data = await response.json()
-        console.log(data)
+        const data = await response.json()        
         return data;
     } catch (error) {
+        console.error(error)
+    }
+}
+
+// Edit Note
+export async function editNote(id: string, payload: unknown) {
+    try{
+        const response = await fetch(`${API_URL}/api/notes/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        const data = await response.json()        
+        return data
+    }catch(error) {
+        console.error(error)
+    }
+}
+
+// Delete Note
+export async function deleteNote(id: string) {
+    try{
+        const response = await fetch(`${API_URL}/api/notes/${id}`, {
+            method: 'DELETE'
+        })
+        const data = await response.json()
+        return data;
+    }catch(error){
         console.error(error)
     }
 }
