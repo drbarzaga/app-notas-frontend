@@ -12,6 +12,8 @@ import EditNoteModal from "./components/EditNoteModal";
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
+  const [searchTerm, setSerarchTerm] = useState("");
   const [createNoteModalOpen, setCreateNoteModalOpen] = useState(false);
   const [noteToEdit, setNoteToEdit] = useState(null);
 
@@ -20,9 +22,27 @@ function App() {
     setNotes(notes);
   }
 
+  function getFilteredNotes() {
+    const filteredNotes = notes.filter((note) => {
+      return (
+        note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        note.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+
+    return filteredNotes;
+  }
+
   useEffect(() => {
     getNotes();
   }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const filteredNotes = getFilteredNotes();
+      setFilteredNotes(filteredNotes);
+    }
+  }, [searchTerm]);
 
   async function handleOnCreate() {
     setCreateNoteModalOpen(false);
@@ -53,11 +73,14 @@ function App() {
         <ApplicationTitle />
       </div>
       <div>
-        <SearchInput />
+        <SearchInput onSearch={(value) => setSerarchTerm(value)} />
       </div>
       <Header onClick={() => setCreateNoteModalOpen(true)} />
       <CardNoteGrid>
-        {notes.map((note) => (
+        {(filteredNotes.length > 0 && searchTerm !== ""
+          ? [...filteredNotes]
+          : [...notes]
+        ).map((note) => (
           <CardNote
             key={note._id}
             title={note.title}

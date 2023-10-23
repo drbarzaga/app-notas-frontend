@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const StyledInput = styled.input`
@@ -16,8 +17,23 @@ const StyledInput = styled.input`
   text-transform: uppercase;
 `;
 
-const SearchInput = () => {
-  return <StyledInput type="text" placeholder="Search" />;
+const SearchInput = (props) => {
+  const [term, setTerm] = useState("");
+
+  function handleChange(e) {
+    const { value } = e.target;
+    setTerm(value);
+    props.onSearch(value);
+  }
+
+  return (
+    <StyledInput
+      type="text"
+      placeholder="Search"
+      value={term}
+      onChange={handleChange}
+    />
+  );
 };
 
 export default SearchInput;
