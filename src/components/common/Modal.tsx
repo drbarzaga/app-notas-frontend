@@ -48,18 +48,26 @@ const Footer = styled.div`
   gap: 5px;
 `;
 
-const Modal = (props) => {
-  if (!props.isOpen) return null;
+type Props = {
+  title: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onAccept: () => void;
+  onClose: () => void;
+};
+
+const Modal = ({ title, children, isOpen, onAccept, onClose }: Props) => {
+  if (!isOpen) return null;
 
   return (
     <>
-      <Overlay onClick={props.onClose} />
+      <Overlay onClick={onClose} />
       <ModalWrapper>
-        {props.title && <Title>{props.title}</Title>}
-        {props.children}
+        {title && <Title>{title}</Title>}
+        {children}
         <Footer>
-          <FormButton onClick={props.onAccept}>Aceptar</FormButton>
-          <FormButton cancel onClick={props.onClose}>
+          <FormButton onClick={onAccept}>Aceptar</FormButton>
+          <FormButton cancel onClick={onClose}>
             Cancelar
           </FormButton>
         </Footer>

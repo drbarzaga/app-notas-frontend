@@ -6,3 +6,11 @@ export interface Note {
     created_at: string
     updated_at: string
 }
+
+export interface ModalContextType {
+    noteToEdit: Note|null
+    createNoteModalOpen: boolean,    
+    showCreateNoteModal: () => void
+    closeCreateNoteModal: () => void
+    setNoteToEditInModal: (note: Note|null) => void
+}

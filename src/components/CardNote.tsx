@@ -35,9 +35,9 @@ const CardNoteFooter = styled.div`
   gap: 10px;
 `;
 
-const ActionButton = styled.a<{ isRemove?: boolean }>`
+const ActionButton = styled.a<{ remove?: boolean }>`
   text-transform: uppercase;
-  color: ${(props: any) => (props.isRemove ? "#F99417" : "#f5f5f5")};
+  color: ${(props) => (props.remove ? "#F99417" : "#f5f5f5")};
   font-size: 14px;
 
   &:hover {
@@ -45,29 +45,36 @@ const ActionButton = styled.a<{ isRemove?: boolean }>`
   }
 `;
 
-const CardNote = (props) => {
+type Props = {
+  title: string;
+  description: string;
+  onEdit: () => void;
+  onRemove: () => void;
+};
+
+const CardNote = ({ title, description, onEdit, onRemove }: Props) => {
   return (
     <CardNoteWrapper>
       <CardNoteBody>
-        <h2>{props.title}</h2>
-        <p>{props.description}</p>
+        <h2>{title}</h2>
+        <p>{description}</p>
       </CardNoteBody>
       <CardNoteFooter>
         <ActionButton
           href=""
           onClick={(e) => {
             e.preventDefault();
-            props.onEdit();
+            onEdit();
           }}
         >
           Edit
         </ActionButton>
         <ActionButton
           href=""
-          isRemove
+          remove
           onClick={(e) => {
             e.preventDefault();
-            props.onRemove();
+            onRemove();
           }}
         >
           Remove

@@ -6,13 +6,21 @@ import FormLabel from "./common/FormLabel";
 import FormInput from "./common/FormInput";
 import FormTextArea from "./common/FormTextArea";
 
-const CreateNoteModal = (props) => {
+type Props = {
+  isOpen: boolean;
+  onCreate: () => void;
+  onClose: () => void;
+};
+
+const CreateNoteModal = ({ isOpen, onCreate, onClose }: Props) => {
   const [form, setForm] = useState({
     title: "",
     description: "",
   });
 
-  function handleInputOnChange(e) {
+  function handleInputOnChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = e.target;
     setForm({
       ...form,
@@ -23,7 +31,7 @@ const CreateNoteModal = (props) => {
   async function handleAccept() {
     try {
       await createNote(form);
-      props.onCreate();
+      onCreate();
     } catch (error) {
       console.error(error);
     }
@@ -31,10 +39,10 @@ const CreateNoteModal = (props) => {
 
   return (
     <Modal
-      isOpen={props.isOpen}
+      isOpen={isOpen}
       title="Create Note"
       onAccept={handleAccept}
-      onClose={props.onClose}
+      onClose={onClose}
     >
       <FormGroup>
         <FormLabel htmlFor="title">Title</FormLabel>

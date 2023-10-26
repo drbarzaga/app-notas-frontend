@@ -17,13 +17,17 @@ const StyledInput = styled.input`
   text-transform: uppercase;
 `;
 
-const SearchInput = (props) => {
+type Props = {
+  onSearch: (value: string) => void;
+};
+
+const SearchInput = ({ onSearch }: Props) => {
   const [term, setTerm] = useState("");
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
     setTerm(value);
-    props.onSearch(value);
+    onSearch(value);
   }
 
   return (

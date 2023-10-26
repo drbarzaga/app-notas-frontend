@@ -6,15 +6,25 @@ const CardNoteGridWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
-const CardNoteGrid = (props) => {
-  return (
-    <CardNoteGridWrapper className="grid">{props.children}</CardNoteGridWrapper>
-  );
+type Props = {
+  children: React.ReactNode;
+};
+
+const CardNoteGrid = ({ children }: Props) => {
+  return <CardNoteGridWrapper className="grid">{children}</CardNoteGridWrapper>;
 };
 
 export default CardNoteGrid;

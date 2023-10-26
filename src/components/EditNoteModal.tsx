@@ -5,14 +5,24 @@ import FormGroup from "./common/FormGroup";
 import FormLabel from "./common/FormLabel";
 import FormInput from "./common/FormInput";
 import FormTextArea from "./common/FormTextArea";
+import { Note } from "../interfaces";
 
-const EditNoteModal = (props) => {
+type Props = {
+  note: Note;
+  isOpen: boolean;
+  onEdit: () => void;
+  onClose: () => void;
+};
+
+const EditNoteModal = ({ note, isOpen, onEdit, onClose }: Props) => {
   const [form, setForm] = useState({
-    title: props.note.title,
-    description: props.note.description,
+    title: note.title,
+    description: note.description,
   });
 
-  function handleInputOnChange(e) {
+  function handleInputOnChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = e.target;
     setForm({
       ...form,
@@ -22,9 +32,9 @@ const EditNoteModal = (props) => {
 
   async function handleAccept() {
     try {
-      const id = props.note._id;
+      const id = note._id;
       await editNote(id, form);
-      props.onEdit();
+      onEdit();
     } catch (error) {
       console.error(error);
     }
@@ -32,10 +42,10 @@ const EditNoteModal = (props) => {
 
   return (
     <Modal
-      isOpen={props.isOpen}
+      isOpen={isOpen}
       title="Edit Note"
       onAccept={handleAccept}
-      onClose={props.onClose}
+      onClose={onClose}
     >
       <FormGroup>
         <FormLabel htmlFor="title">Title</FormLabel>
