@@ -21,3 +21,9 @@ $ npm run dev
 ```
 
 
+## Environment Variables
+```
+Create a .env file in the root directory and define this env variable VITE_API_URL
+
+VITE_API_URL // NodeJS API for App Notes
+```
